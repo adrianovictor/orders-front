@@ -16,7 +16,7 @@ import { ptBR } from 'date-fns/locale';
   styleUrl: './list-orders.component.css'
 })
 export class ListOrdersComponent implements OnInit {
-  pedidos: Order[] = [];
+  orders: Order[] = [];
   filteredOrder: Order[] = [];
   searchText: string = '';
 
@@ -30,18 +30,18 @@ export class ListOrdersComponent implements OnInit {
 
   loadOrders(): void {
     this.orderService.getOrders().subscribe(response => {
-      this.pedidos = response;
+      this.orders = response;
       this.filteredOrder = response;
     });
   }
 
   public filteredOrders(): void {
     if (this.searchText) {
-      this.filteredOrder = this.pedidos.filter(order => 
+      this.filteredOrder = this.orders.filter(order => 
         order.customerName.toLowerCase().includes(this.searchText.toLowerCase())
       );
     } else {
-      this.filteredOrder = this.pedidos;
+      this.filteredOrder = this.orders;
     }
   }
 
@@ -54,5 +54,22 @@ export class ListOrdersComponent implements OnInit {
 
   formatDate(orderDate: Date): string {
     return format(orderDate, 'dd/MM/yyyy', { locale: ptBR });
+  }
+
+  public getOrderStatus(status: number): string {
+    switch (status) {
+      case 1:
+        return 'Pendente';
+      case 2:
+        return 'Em Processamento';
+      case 6:
+        return 'Enviado';
+      case 7:
+        return 'Entregue';
+      case 8:
+        return 'Cancelado';
+      default:
+        return 'Desconhecido';
+    }
   }
 }

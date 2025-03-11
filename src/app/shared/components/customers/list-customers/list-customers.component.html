@@ -10,7 +10,7 @@
         class="form-control" 
         placeholder="Buscar por nome ou e-mail" 
         [(ngModel)]="searchText" 
-        (input)="filterBooks()" />
+        (input)="filterCustomers()" />
     </div>  
   
     <table class="table table-responsive table-striped table-hover">
@@ -24,16 +24,16 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let cliente of filteredCustomer">
-            <th scope="row">{{ cliente.id }}</th>
-            <td>{{ cliente.name }}</td>
-            <td>{{ cliente.email }}</td>
-            <td>{{ cliente.phone }}</td>
+        <tr *ngFor="let item of filteredCustomer">
+            <th scope="row">{{ item.id }}</th>
+            <td>{{ item.name }}</td>
+            <td>{{ item.email }}</td>
+            <td>{{ item.phone }}</td>
             <td>
-              <a [routerLink]="['/editar-cliente', cliente.id]" class="text-primary" title="Editar">
+              <a [routerLink]="['/editar-cliente', item.id]" class="text-primary" title="Editar">
                   <i class="fas fa-edit icon-action"></i>
               </a>
-              <a (click)="remover(cliente.id)" class="text-danger" title="Remover">
+              <a (click)="remover(item.id)" class="text-danger" title="Remover">
                   <i class="fas fa-trash-alt icon-action"></i>
               </a>
             </td>        

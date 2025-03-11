@@ -24,17 +24,17 @@
       </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let pedido of filteredOrder">
-            <th scope="row">{{ pedido.id }}</th>
-            <td>{{ pedido.customerName }}</td>
-            <td>{{ formatDate(pedido.orderDate) }}</td>
-            <td>{{ formatValue(pedido.totalAmount) }}</td>
-            <td>{{ pedido.orderStatus }}</td>
+        <tr *ngFor="let item of filteredOrder">
+            <th scope="row">{{ item.id }}</th>
+            <td>{{ item.customerName }}</td>
+            <td>{{ formatDate(item.orderDate) }}</td>
+            <td>{{ formatValue(item.totalAmount) }}</td>
+            <td>{{ getOrderStatus(item.orderStatus) }}</td>
             <td>
-              <a [routerLink]="['/detalhar-pedido', pedido.id]" class="text-primary" title="Detalhar pedido">
+              <a [routerLink]="['/detalhar-pedido', item.id]" class="text-primary" title="Detalhar pedido">
                 <i class="fas fa-edit icon-action"></i>
               </a>
-              <a (click)="remover(pedido.id)" class="text-danger" title="Remover">
+              <a (click)="remover(item.id)" class="text-danger" title="Remover">
                   <i class="fas fa-trash-alt icon-action"></i>
               </a>
             </td>        

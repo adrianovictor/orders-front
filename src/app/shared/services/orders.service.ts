@@ -27,5 +27,9 @@ export class OrdersService {
   
   saveOrder(order: Order): Observable<any> {
     return this.http.post(this.ordersApi, order);
-  }   
+  }
+  
+  deleteOrder(id: number): Observable<any> {
+    return this.http.delete(`${this.ordersApi}/${id}`);
+  }  
 }

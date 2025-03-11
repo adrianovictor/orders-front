@@ -32,9 +32,20 @@ export class ListProductsComponent implements OnInit {
     })
   }
 
-  public remover(customerId: number): void {
+  public remover(productId: number): void {
+    if (confirm('Tem certeza que deseja excluir os livros selecionados?')) {
+      this.produtctService.deleteProduct(productId).subscribe({
+        next: () => {
+          console.log('Operação realizada com sucesso!');
+          this.loadProducts(); // Recarrega a lista de livros após a exclusão
+        },
+        error: (err) => {
+          console.log('Ocorreu um erro durante a operação.');
+        }
+      });
+    }    
   }
-
+  
   public filterProducts(): void {
     if (this.searchText) {
       this.filteredProduct = this.products.filter(product =>

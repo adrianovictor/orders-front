@@ -8,6 +8,7 @@ import { EditCustomerComponent } from './shared/components/customers/edit-custom
 import { OrderDetailComponent } from './shared/components/orders/order-detail/order-detail.component';
 import { CreateOrderComponent } from './shared/components/orders/create-order/create-order.component';
 import { CreateProductComponent } from './shared/components/products/create-product/create-product.component';
+import { EditProductComponent } from './shared/components/products/edit-product/edit-product.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'pedidos', pathMatch: 'full' },
@@ -16,7 +17,7 @@ export const routes: Routes = [
   { path: 'editar-cliente/:id', component: EditCustomerComponent },
   { path: 'produtos', component: ListProductsComponent },
   { path: 'novo-produto', component: CreateProductComponent },  
-  { path: 'editar-produto/:id', component: ListCustomersComponent },  
+  { path: 'editar-produto/:id', component: EditProductComponent },  
   { path: 'pedidos', component: ListOrdersComponent },
   { path: 'detalhar-pedido/:id', component: OrderDetailComponent },
   { path: 'novo-pedido', component: CreateOrderComponent }
