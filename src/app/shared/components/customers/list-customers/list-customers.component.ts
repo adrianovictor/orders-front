@@ -33,7 +33,7 @@ export class ListCustomersComponent implements OnInit {
   }
 
   public remover(customerId: number): void {
-    if (confirm('Tem certeza que deseja excluir os livros selecionados?')) {
+    if (confirm('Tem certeza que deseja excluir o item selecionado ?')) {
       this.customerService.deleteCustomer(customerId).subscribe({
         next: () => {
           console.log('Operação realizada com sucesso!');

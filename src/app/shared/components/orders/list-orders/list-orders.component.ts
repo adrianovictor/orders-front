@@ -46,6 +46,17 @@ export class ListOrdersComponent implements OnInit {
   }
 
   public remover(orderId: number): void {
+    if (confirm('Tem certeza que deseja excluir o item selecionado ?')) {
+      this.orderService.deleteOrder(orderId).subscribe({
+        next: () => {
+          console.log('Operação realizada com sucesso!');
+          this.loadOrders(); // Recarrega a lista de livros após a exclusão
+        },
+        error: (err) => {
+          console.log('Ocorreu um erro durante a operação.');
+        }
+      });
+    }       
   }
 
   formatValue(value: number): string {

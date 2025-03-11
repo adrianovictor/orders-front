@@ -33,7 +33,7 @@ export class ListProductsComponent implements OnInit {
   }
 
   public remover(productId: number): void {
-    if (confirm('Tem certeza que deseja excluir os livros selecionados?')) {
+    if (confirm('Tem certeza que deseja excluir item selecionado ?')) {
       this.produtctService.deleteProduct(productId).subscribe({
         next: () => {
           console.log('Operação realizada com sucesso!');
@@ -45,7 +45,7 @@ export class ListProductsComponent implements OnInit {
       });
     }    
   }
-  
+
   public filterProducts(): void {
     if (this.searchText) {
       this.filteredProduct = this.products.filter(product =>
