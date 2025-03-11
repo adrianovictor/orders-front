@@ -1,0 +1,122 @@
+<div class="container mt-4">
+    <div>
+      <div>
+        <h2>Novo Pedido</h2>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
+          <!-- Cabeçalho do Pedido -->
+          <div class="row mb-3">
+            <div class="col-md-5">
+              <div class="form-group">
+                <label for="customerId">Cliente</label>
+                <select id="customerId" formControlName="customerId" class="form-control" 
+                        [ngClass]="{'is-invalid': orderForm.get('customerId')?.invalid && orderForm.get('customerId')?.touched}">
+                  <option value="">Selecione um cliente</option>
+                  <option *ngFor="let cliente of customers" [value]="cliente.id">{{ cliente.name }}</option>
+                </select>
+                <div class="invalid-feedback" *ngIf="orderForm.get('customerId')?.errors?.['required'] && orderForm.get('customerId')?.touched">
+                  Cliente é obrigatório
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <!-- <div class="form-group">
+                <label for="data">Data</label>
+                <input type="date" id="data" formControlName="data" class="form-control"
+                       [ngClass]="{'is-invalid': orderForm.get('data')?.invalid && orderForm.get('data')?.touched}">
+                <div class="invalid-feedback" *ngIf="orderForm.get('data')?.errors?.['required'] && orderForm.get('data')?.touched">
+                  Data é obrigatória
+                </div>
+              </div> -->
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>Total do Pedido</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">R$</span>
+                  </div>
+                  <input type="text" class="form-control" [value]="calcularTotalPedido()" readonly>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Itens do Pedido -->
+          <div class="mt-4 mb-3">
+            <div class="card-header d-flex justify-content-between align-items-center bg-light">
+              <h5 class="mb-0">Itens do Pedido</h5>
+              <button type="button" class="btn btn-sm btn-primary" (click)="adicionarItem()">
+                <i class="bi bi-plus-circle"></i> Adicionar Item
+              </button>
+            </div>
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table table-striped table-hover mb-0">
+                  <thead>
+                    <tr>
+                      <th style="width: 40%">Produto</th>
+                      <th style="width: 15%">Quantidade</th>
+                      <th style="width: 20%">Preço Unit.</th>
+                      <th style="width: 15%">Total</th>
+                      <th style="width: 10%">Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody formArrayName="items">
+                    <tr *ngFor="let itemForm of itensFormArray.controls; let i = index" [formGroupName]="i">
+                      <td>
+                        <select formControlName="productId" class="form-control form-control-sm"
+                                [ngClass]="{'is-invalid': itemForm.get('productId')?.invalid && itemForm.get('productId')?.touched}">
+                          <option value="">Selecione um produto</option>
+                          <option *ngFor="let produto of products" [value]="produto.id">{{ produto.name }}</option>
+                        </select>
+                      </td>
+                      <td>
+                        <input type="number" formControlName="quantity" class="form-control form-control-sm" min="1"
+                               [ngClass]="{'is-invalid': itemForm.get('quantity')?.invalid && itemForm.get('quantity')?.touched}">
+                      </td>
+                      <td>
+                        <div class="input-group input-group-sm">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">R$</span>
+                          </div>
+                          <input type="text" formControlName="unitPrice" class="form-control form-control-sm" readonly>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="input-group input-group-sm">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">R$</span>
+                          </div>
+                          <input type="text" formControlName="totalPrice" class="form-control form-control-sm" readonly>
+                        </div>
+                      </td>
+                      <td class="text-center">
+                        <button type="button" class="btn btn-sm btn-danger" (click)="removerItem(i)">
+                          <i class="bi bi-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr *ngIf="itensFormArray.length === 0">
+                      <td colspan="5" class="text-center py-3">
+                        Nenhum item adicionado ao pedido. Clique em "Adicionar Item" para começar.
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Botões de Ação -->
+          <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-secondary me-2" (click)="limparFormulario()">Limpar</button>
+            <button type="submit" class="btn btn-success" [disabled]="itensFormArray.length === 0">
+              Criar Pedido
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

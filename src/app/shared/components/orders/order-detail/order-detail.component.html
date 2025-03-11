@@ -1,0 +1,123 @@
+<div class="container mt-4">
+    <div>
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h2>{{ editMode ? 'Editar Pedido' : 'Detalhes do Pedido' }} #{{ orderId }}</h2>
+        <div>
+          <button *ngIf="!editMode" class="btn btn-success me-2" (click)="return()">
+            <i class="bi bi-left-arrow"></i> Voltar
+          </button>            
+          <button *ngIf="!editMode" class="btn btn-primary me-2" (click)="toggleEditMode()">
+            <i class="bi bi-pencil"></i> Editar
+          </button>
+          <button *ngIf="editMode" class="btn btn-success me-2" (click)="saveOrder()">
+            <i class="bi bi-check2"></i> Salvar
+          </button>
+          <button *ngIf="editMode" class="btn btn-secondary" (click)="toggleEditMode()">
+            <i class="bi bi-x"></i> Cancelar
+          </button>
+        </div>
+      </div>
+      
+      <div class="card-body">
+        <div *ngIf="loading" class="text-center">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Carregando...</span>
+          </div>
+          <p class="mt-2">Carregando dados do pedido...</p>
+        </div>
+        
+        <form *ngIf="!loading" [formGroup]="orderForm">
+          <div class="row mb-3">
+            <div class="col-md-3">
+              <label class="form-label">ID do Cliente</label>
+              <input type="text" class="form-control" formControlName="clienteNome">
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Data</label>
+              <input type="text" class="form-control" formControlName="data">
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Status</label>
+              <select class="form-select" formControlName="orderStatus">
+                <option value="1">Pendente</option>
+                <option value="2">Em Processamento</option>
+                <option value="6">Enviado</option>
+                <option value="7">Entregue</option>
+                <option value="8">Cancelado</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Total</label>
+              <div class="input-group">
+                <span class="input-group-text">R$</span>
+                <input type="text" class="form-control" formControlName="total" readonly>
+              </div>
+            </div>
+          </div>
+          
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5>Itens do Pedido</h5>
+            <button *ngIf="editMode" type="button" class="btn btn-sm btn-outline-primary" (click)="addItem()">
+              <i class="bi bi-plus-circle"></i> Adicionar Item
+            </button>
+          </div>
+          
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+              <thead class="table-light">
+                <tr>
+                  <th>#</th>
+                  <!-- <th>ID do Produto</th> -->
+                  <th>Nome do Produto</th>
+                  <th>Quantidade</th>
+                  <th>Preço Unitário</th>
+                  <th>Preço Total</th>
+                  <th *ngIf="editMode">Ações</th>
+                </tr>
+              </thead>
+              <tbody formArrayName="items">
+                <tr *ngFor="let item of itemsFormArray.controls; let i = index" [formGroupName]="i">
+                  <td>{{ i + 1 }}</td>
+                  <!-- <td>
+                    <input type="number" class="form-control form-control-sm" formControlName="productId">
+                  </td> -->
+                  <td>
+                    <select class="form-select form-select-sm" formControlName="productId" (change)="onProductChange(i, $event)">
+                        <option value="">Selecione um produto</option>
+                        <option *ngFor="let product of products" [value]="product.id">{{ product.name }}</option>
+                      </select>                    
+                    <!-- <input type="text" class="form-control form-control-sm" formControlName="productName"> -->
+                  </td>
+                  <td>
+                    <input type="number" class="form-control form-control-sm" formControlName="quantity" 
+                           min="1" (change)="updateItemTotal(i)">
+                  </td>
+                  <td>
+                    <div class="input-group input-group-sm">
+                      <span class="input-group-text">R$</span>
+                      <input type="number" step="0.01" class="form-control form-control-sm" 
+                             formControlName="unitPrice" (change)="updateItemTotal(i)">
+                    </div>
+                  </td>
+                  <td>
+                    <div class="input-group input-group-sm">
+                      <span class="input-group-text">R$</span>
+                      <input type="text" class="form-control form-control-sm" formControlName="totalPrice" readonly>
+                    </div>
+                  </td>
+                  <td *ngIf="editMode" class="text-center">
+                    <button type="button" class="btn btn-sm btn-danger" (click)="removeItem(i)">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="itemsFormArray.length === 0">
+                  <td colspan="7" class="text-center">Nenhum item encontrado</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

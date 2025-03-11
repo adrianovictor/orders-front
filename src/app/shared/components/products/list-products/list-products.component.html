@@ -1,0 +1,46 @@
+<div class="container">
+    <h2>Produtos</h2>
+  
+    <div class="mb-3 input-group">
+      <span class="input-group-text">
+        <i class="fas fa-search"></i> <!-- Ícone de lupa -->
+      </span>
+      <input 
+        type="text" 
+        class="form-control" 
+        placeholder="Buscar por nome" 
+        [(ngModel)]="searchText" 
+        (input)="filterProducts()" />
+    </div>  
+  
+    <table class="table table-responsive table-striped table-hover">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nome</th>
+          <th scope="col">Preço</th>
+          <th scope="col">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let produto of filteredProduct">
+            <th scope="row">{{ produto.id }}</th>
+            <td>{{ produto.name }}</td>
+            <td>{{ produto.price }}</td>
+            <td>
+              <a [routerLink]="['/editar-produto', produto.id]" class="text-primary" title="Editar">
+                  <i class="fas fa-edit icon-action"></i>
+              </a>
+              <a (click)="remover(produto.id)" class="text-danger" title="Remover">
+                  <i class="fas fa-trash-alt icon-action"></i>
+              </a>
+            </td>        
+        </tr>
+      </tbody>
+    </table>
+    
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <a routerLink="/novo-produto" class="btn btn-success"><i class="fas fa-plus"></i> Adicionar Produto</a>
+    </div>  
+
+</div>

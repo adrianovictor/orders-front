@@ -1,0 +1,25 @@
+<div class="container">
+    <h2>Dados do Produto</h2>
+    <br>
+    <form (ngSubmit)="onSubmit()" #bookForm="ngForm">
+      <div class="mb-3">
+        <label for="name" class="form-label">Nome</label>
+        <input type="text" id="name" class="form-control" [(ngModel)]="product.name" name="nome" required>        
+      </div>
+  
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="subject" class="form-label">Telefone</label>
+          <input type="text" id="subject" class="form-control" [(ngModel)]="product.price" name="telefone">
+        </div>
+      </div>
+  
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <a routerLink="/produtos" class="btn btn-secondary">
+          <i class="fas fa-arrow-left"></i> Voltar</a>
+        <button type="submit" class="btn btn-success">
+          <i class="fas fa-save"></i> Salvar</button>
+      </div>    
+    </form>
+  </div>        
+  

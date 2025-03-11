@@ -1,0 +1,48 @@
+<div class="container">
+    <h2>Clientes</h2>
+  
+    <div class="mb-3 input-group">
+      <span class="input-group-text">
+        <i class="fas fa-search"></i> <!-- Ícone de lupa -->
+      </span>
+      <input 
+        type="text" 
+        class="form-control" 
+        placeholder="Buscar por nome ou e-mail" 
+        [(ngModel)]="searchText" 
+        (input)="filterBooks()" />
+    </div>  
+  
+    <table class="table table-responsive table-striped table-hover">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nome</th>
+          <th scope="col">E-mail</th>
+          <th scope="col">Telefone</th>
+          <th scope="col">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cliente of filteredCustomer">
+            <th scope="row">{{ cliente.id }}</th>
+            <td>{{ cliente.name }}</td>
+            <td>{{ cliente.email }}</td>
+            <td>{{ cliente.phone }}</td>
+            <td>
+              <a [routerLink]="['/editar-cliente', cliente.id]" class="text-primary" title="Editar">
+                  <i class="fas fa-edit icon-action"></i>
+              </a>
+              <a (click)="remover(cliente.id)" class="text-danger" title="Remover">
+                  <i class="fas fa-trash-alt icon-action"></i>
+              </a>
+            </td>        
+        </tr>
+      </tbody>
+    </table>
+    
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <a routerLink="/novo-cliente" class="btn btn-success"><i class="fas fa-plus"></i> Adicionar Cliente</a>
+    </div>  
+
+</div>

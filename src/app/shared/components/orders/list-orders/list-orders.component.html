@@ -1,0 +1,49 @@
+<div class="container">
+  <h2>Pedidos</h2>
+
+  <div class="mb-3 input-group">
+    <span class="input-group-text">
+      <i class="fas fa-search"></i>
+    </span>
+    <input type="text" 
+           class="form-control" 
+           placeholder="Buscar por cliente"
+           [(ngModel)]="searchText"
+           (input)="filteredOrders()" />
+  </div>
+
+  <table class="table table-responsive table-striped table-hover">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Cliente</th>
+        <th scope="col">Data Pedido</th>
+        <th scope="col">Total Compra</th>
+        <th scope="col">Situação</th>
+        <th scope="col">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let pedido of filteredOrder">
+            <th scope="row">{{ pedido.id }}</th>
+            <td>{{ pedido.customerName }}</td>
+            <td>{{ formatDate(pedido.orderDate) }}</td>
+            <td>{{ formatValue(pedido.totalAmount) }}</td>
+            <td>{{ pedido.orderStatus }}</td>
+            <td>
+              <a [routerLink]="['/detalhar-pedido', pedido.id]" class="text-primary" title="Detalhar pedido">
+                <i class="fas fa-edit icon-action"></i>
+              </a>
+              <a (click)="remover(pedido.id)" class="text-danger" title="Remover">
+                  <i class="fas fa-trash-alt icon-action"></i>
+              </a>
+            </td>        
+        </tr>
+    </tbody>
+  </table>
+
+  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <a routerLink="/novo-pedido" class="btn btn-success"><i class="fas fa-plus"></i> Novo Pedido</a>
+  </div>
+
+</div>
